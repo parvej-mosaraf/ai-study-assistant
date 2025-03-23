@@ -43,10 +43,10 @@ YT_API_KEY=your_youtube_api_key
 DATABASE_URL=sqlite:///study_assistant.db
 ```
 
-4. Install Ollama and the Mistral model:
+4. Install Ollama and the llama model:
 ```bash
 # Follow instructions at https://ollama.ai to install Ollama
-ollama pull mistral
+ollama pull llama3.2:1b
 ```
 
 5. Run the backend server:
@@ -110,7 +110,7 @@ study-assistant/
 
 ## Contributing
 
-1. Fork the repository
+1. clone the repository
 2. Create a feature branch
 3. Commit your changes
 4. Push to the branch
