@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-from langchain_community.llms import Ollama
-from googleapiclient.discovery import build
+from langchain_ollama import OllamaLLM
+from googleapiclient.discovery import build # type: ignore
 from reportlab.pdfgen import canvas
 from io import BytesIO
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from sqlalchemy.orm import DeclarativeBase
+from datetime import datetime, timezone
 
 # Load environment variables
 load_dotenv()
@@ -19,10 +20,14 @@ CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
     "DATABASE_URL", "sqlite:///study_assistant.db"
 )
-db = SQLAlchemy(app)
+
+class Base(DeclarativeBase):
+  pass
+
+db = SQLAlchemy(app, model_class=Base)
 
 # Initialize Ollama
-llm = Ollama(model="mistral")
+llm = OllamaLLM(model="llama3.2:1b")
 
 # YouTube API setup
 YT_API_KEY = os.getenv("YT_API_KEY")
@@ -30,13 +35,13 @@ youtube = build("youtube", "v3", developerKey=YT_API_KEY)
 
 
 # Database Models
-class ChatSession(db.Model):
+class ChatSession(db.Model): # type: ignore
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     messages = db.relationship("Message", backref="session", lazy=True)
 
 
-class Message(db.Model):
+class Message(db.Model): # type: ignore
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(10), nullable=False)
     content = db.Column(db.Text, nullable=False)
