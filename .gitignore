@@ -1,4 +1,69 @@
-.venv/
-.env
-instance/
 study_summary*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.swp
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Flask environment variables
+.env
+.env.local
+instance/
+
+# Flask cache and logs
+*.log
+*.pot
+celerybeat-schedule
+cache/
+logs/
+.mypy_cache/
+
+# Database
+*.sqlite3
+*.db
+*.db-journal
+migrations/
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# React build files
+build/
+dist/
+
+# Static files
+staticfiles/
+static/
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+*.pycoverage
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# IDE & Editor Configs
+.vscode/
+.idea/
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# GitHub Actions or other CI/CD temp files
+.github/workflows/*.log
